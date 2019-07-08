@@ -3,6 +3,7 @@ const express = require("express");
 const mongoose = require("mongoose");
 const bodyParser = require("body-parser");
 const Post = require("./models/postModel");
+const path = require("path");
 const postsRouter = require("./routes/postsRouter")(Post);
 
 // Use express by initializing it & holding the reference in a constant named 'app'
@@ -30,9 +31,12 @@ app.use(bodyParser.json());
 // Configuring all the API routes such that all routes url must start with '/api' 
 app.use("/api", postsRouter);
 
+// Telling express to use the 'css' & 'js' files from the 'public' directory as static files
+app.use(express.static(path.join(__dirname, 'public')));
+
 // Showing a message on the browser screen, so that we can make sure of that the server has started properly
 app.get("/", (req, res) => {
-  res.send("API server is working");
+  res.sendFile(path.join(__dirname, 'views', 'index.html'));
 });
 
 // Listening to the port
