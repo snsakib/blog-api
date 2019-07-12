@@ -65,15 +65,26 @@ function routes(Post) {
     res.json(req.post);
   });
 
-  // Fetch only the categories field of all posts
+  // Fetch the total number of posts in each categories
   // Endpoint: "/api/postsCategories"
   // HTTP method: GET
   postsRouter.route("/postsCategories").get((req, res) => {
-    Post.find({}, "categories", (err, posts) => {
+    Post.find({}, "categories", (err, postsCategories) => {
       if (err) {
         return res.send(err);
+      } else {
+        let categories = {};
+        postsCategories.forEach(postsCategory => {
+          postsCategory.categories.forEach(category => {
+            if (!categories.hasOwnProperty(category)) {
+              categories[category] = 1;
+            } else {
+              categories[category] = ++categories[category];
+            }
+          });
+        });
+        return res.json(categories);
       }
-      return res.json(posts);
     });
   });
 
