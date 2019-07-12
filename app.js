@@ -28,6 +28,12 @@ const port = process.env.PORT;
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
+// Configuring CORS header
+app.use((req, res, next) => {
+  res.setHeader('Access-Control-Allow-Origin', '*');
+  next();
+});
+
 // Configuring all the API routes such that all routes url must start with '/api' 
 app.use("/api", postsRouter);
 
