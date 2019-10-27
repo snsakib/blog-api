@@ -42,7 +42,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 // Showing a message on the browser screen, so that we can make sure of that the server has started properly
 app.get("/", (req, res) => {
-  res.sendFile(path.join(__dirname, 'views', 'index.html'));
+  res.redirect('https://snsakib-admin-panel.netlify.com');
 });
 
 // Listening to the port
